@@ -1,0 +1,162 @@
+@import "tailwindcss";
+
+/* ── Design tokens ────────────────────────────────────────────────────── */
+@theme {
+  --font-display: "Bebas Neue", Impact, sans-serif;
+  --font-sans:    Inter, system-ui, sans-serif;
+
+  --color-ink:     #0b0a0a;
+  --color-char:    #161414;
+  --color-bone:    #f1ebe3;
+  --color-crimson: #9b1c2e;
+}
+
+/* ── Base ─────────────────────────────────────────────────────────────── */
+html {
+  scroll-behavior: smooth;
+  background: var(--color-ink);
+  /* Prevent horizontal overflow everywhere */
+  overflow-x: hidden;
+}
+
+body {
+  color: var(--color-bone);
+  font-family: var(--font-sans);
+  overflow-x: hidden;
+  /* Improve text rendering */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* ── Focus indicator ─────────────────────────────────────────────────── */
+:focus-visible {
+  outline: 2px solid #e8566b;
+  outline-offset: 3px;
+}
+
+/* Remove default focus ring where we manage it explicitly */
+:focus:not(:focus-visible) {
+  outline: none;
+}
+
+/* ── Skip link ───────────────────────────────────────────────────────── */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}
+
+.focus\:not-sr-only:focus {
+  position: fixed;
+  width: auto;
+  height: auto;
+  padding: 0.5rem 1rem;
+  margin: 0;
+  overflow: visible;
+  clip: auto;
+  white-space: normal;
+}
+
+/* ── Film grain overlay ───────────────────────────────────────────────── */
+.grain::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 60;
+  opacity: 0.07;
+  mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence baseFrequency='.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+/* ── Scrollbar ────────────────────────────────────────────────────────── */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: var(--color-ink);
+}
+::-webkit-scrollbar-thumb {
+  background: rgba(241, 235, 227, 0.15);
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(241, 235, 227, 0.3);
+}
+
+/* Hide scrollbar for thumbnail strips while keeping scroll */
+.scrollbar-none {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+.scrollbar-none::-webkit-scrollbar {
+  display: none;
+}
+
+/* ── Section dividers ─────────────────────────────────────────────────── */
+section + section {
+  border-top: 1px solid rgba(241, 235, 227, 0.06);
+}
+
+/* ── Responsive images ────────────────────────────────────────────────── */
+img {
+  max-width: 100%;
+  height: auto;
+  /* Prevent layout shift by reserving space */
+  display: block;
+}
+
+/* ── Smooth iframe fade-in ────────────────────────────────────────────── */
+iframe {
+  border: 0;
+}
+
+/* ── Line-clamp utility (Tailwind v4 fallback) ────────────────────────── */
+.line-clamp-2 {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+/* ── Reduced-motion ───────────────────────────────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* ── High-contrast / forced-colors safety ────────────────────────────── */
+@media (forced-colors: active) {
+  :focus-visible {
+    outline: 3px solid ButtonText;
+  }
+}
+
+/* ── Print ────────────────────────────────────────────────────────────── */
+@media print {
+  .grain::after,
+  header,
+  footer {
+    display: none;
+  }
+  body {
+    background: white;
+    color: black;
+  }
+}

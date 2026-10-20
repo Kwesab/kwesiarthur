@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+
+# Unofficial fan project — not affiliated with Kwesi Arthur or his management.
+# Sitemap: https://your-domain.com/sitemap.xml
